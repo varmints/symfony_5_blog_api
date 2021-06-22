@@ -38,7 +38,7 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"article:read", "article:write"})
-     * @Assert\NotBlank
+     * @Assert\NotBlank()
      * @Assert\Length(
      *     min=2,
      *     max=100
@@ -74,6 +74,13 @@ class Article
      * @Groups({"article:write"})
      */
     private $isPublished = false;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="articles")
+     * @ORM\JoinColumn(nullable=false)
+     * @Groups({"article:read", "article:write"})
+     */
+    private $owner;
 
     public function __construct(string $title = null)
     {
@@ -163,6 +170,18 @@ class Article
     public function setIsPublished(bool $isPublished): self
     {
         $this->isPublished = $isPublished;
+
+        return $this;
+    }
+
+    public function getOwner(): ?User
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?User $owner): self
+    {
+        $this->owner = $owner;
 
         return $this;
     }
