@@ -37,7 +37,7 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"article:read", "article:write"})
+     * @Groups({"article:read", "article:write", "user:read"})
      * @Assert\NotBlank()
      * @Assert\Length(
      *     min=2,
@@ -48,13 +48,13 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=100)
-     * @Groups({"article:read"})
+     * @Groups({"article:read", "user:read"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Groups({"article:read", "article:write"})
+     * @Groups({"article:read", "article:write", "user:read"})
      */
     private $shortContent;
 
@@ -71,7 +71,7 @@ class Article
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"article:write"})
+     * @Groups({"article:write", "user:read"})
      */
     private $isPublished = false;
 

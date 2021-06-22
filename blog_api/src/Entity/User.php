@@ -1,8 +1,10 @@
-<?php
+<?php declare(ticks=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Serializer\Filter\PropertyFilter;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
     denormalizationContext: ['groups' => ['user:write']],
     normalizationContext: ['groups' => ['user:read']],
 )]
+#[ApiFilter(PropertyFilter::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     /**
@@ -55,13 +58,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-     * @Groups({"user:read", "user:write"})
+     * @Groups({"user:read", "user:write", "article:read"})
      * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\OneToMany(targetEntity=Article::class, mappedBy="owner")
+     * @Groups("user:read")
      */
     private $articles;
 
