@@ -17,8 +17,15 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  */
 #[ApiResource(
-    collectionOperations: ['get', 'post'],
-    itemOperations: ['get', 'put', 'delete'],
+    collectionOperations: [
+        'get',
+        'post' => ['access_control' => 'is_granted("ROLE_USER")']
+    ],
+    itemOperations: [
+        'get',
+        'put' => ['access_control' => 'is_granted("ROLE_USER")'],
+        'delete' => ['access_control' => 'is_granted("ROLE_ADMIN")']]
+    ,
     attributes: ['pagination_items_per_page' => 10],
     denormalizationContext: ['groups' => ['article:write'], 'swagger_definition_name' => 'Write'],
     normalizationContext: ['groups' => ['article:read'], 'swagger_definition_name' => 'Read'],

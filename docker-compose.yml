@@ -14,6 +14,7 @@ services:
     working_dir: /var/www/html
     environment:
       - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB}?serverVersion=mariadb-10.5.10'
+      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@db_server:3306/${MYSQL_DB_TEST}?serverVersion=mariadb-10.5.10'
     volumes:
       - ./blog_api:/var/www/html
       - ./docker/server/apache/sites-enabled:/etc/apache2/sites-enabled
@@ -25,7 +26,7 @@ services:
       - symfony_project_2021_net
 
   db_server:
-    image: mariadb:10.5.9
+    image: mariadb:10.5.10
     container_name: '${APP_NAME}-db'
     restart: always
     ports:
