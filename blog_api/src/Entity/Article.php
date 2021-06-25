@@ -27,8 +27,12 @@ use Symfony\Component\Validator\Constraints as Assert;
     ],
     itemOperations: [
         'get',
-        'put' => ['security' => 'is_granted("ROLE_USER") and object.getOwner() == user'],
-        'delete' => ['security' => 'is_granted("ROLE_ADMIN")']],
+        'put' => [
+            'security' => 'is_granted("ROLE_USER") and object.getOwner() == user',
+            'security_message' => 'only the creator can edit post'
+        ],
+        'delete' => ['security' => 'is_granted("ROLE_ADMIN")']
+    ],
     attributes: ['pagination_items_per_page' => 10],
     denormalizationContext: ['groups' => ['article:write'], 'swagger_definition_name' => 'Write'],
     normalizationContext: ['groups' => ['article:read'], 'swagger_definition_name' => 'Read'],

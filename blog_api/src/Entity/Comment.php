@@ -11,7 +11,21 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
  */
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: [
+        'get',
+        'post' => ['security' => 'is_granted("ROLE_USER")']
+    ],
+    itemOperations: [
+        'get',
+        'put' => [
+            'security' => 'is_granted("ROLE_USER") and object.getOwner() == user',
+            'security_message' => 'only the creator can edit post'
+        ],
+        'delete' => ['security' => 'is_granted("ROLE_ADMIN")']
+    ],
+    attributes: ['security' => 'is_granted("ROLE_USER")'],
+)]
 class Comment
 {
     /**

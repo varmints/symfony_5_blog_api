@@ -23,8 +23,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @UniqueEntity("username")
  */
 #[ApiResource(
-    collectionOperations: ['get', 'post'],
-    itemOperations: ['get', 'put', 'delete'],
+    collectionOperations: [
+        'get',
+        'post' => ['security' => 'is_granted("IS_AUTHENTICATED_ANONYMOUSLY")']
+    ],
+    itemOperations: [
+        'get',
+        'put' => ['security' => 'is_granted("ROLE_USER") and object == user'],
+        'delete' => ['security' => 'is_granted("ROLE_ADMIN")']
+    ],
+    attributes: ['security' => 'is_granted("ROLE_USER")'],
     denormalizationContext: ['groups' => ['user:write']],
     normalizationContext: ['groups' => ['user:read']],
 )]
@@ -54,9 +62,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write"})
      */
     private $password;
+
+    /**
+     * @Groups({"user:write"})
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
@@ -168,7 +180,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        $this->plainPassword = null;
     }
 
     public function setUsername(string $username): self
@@ -234,6 +246,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $comment->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword(): ?string
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword(string $plainPassword): self
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

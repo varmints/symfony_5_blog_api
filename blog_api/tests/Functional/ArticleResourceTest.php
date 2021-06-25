@@ -4,7 +4,6 @@
 namespace App\Tests\Functional;
 
 use App\Entity\Article;
-use App\Entity\User;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
@@ -48,7 +47,7 @@ class ArticleResourceTest extends CustomApiTestCase
 
         $this->logIn($client, 'example2@example.com', 'foo');
         $client->request('PUT', '/api/articles/'.$article->getId(), [
-            'json' => ['title' => 'updates']
+            'json' => ['title' => 'updates', 'owner' => '/api/users/'.$user2->getId()]
         ]);
         $this->assertResponseStatusCodeSame(403);
 
