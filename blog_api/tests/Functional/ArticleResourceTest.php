@@ -1,4 +1,4 @@
-<?php
+<?php declare(ticks=1);
 
 
 namespace App\Tests\Functional;

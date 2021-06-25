@@ -1,4 +1,6 @@
-<?php declare(ticks=1);
+<?php
+
+declare(ticks=1);
 
 namespace App\Entity;
 
