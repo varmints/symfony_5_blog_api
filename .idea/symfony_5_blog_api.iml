@@ -141,6 +141,11 @@
       <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/sebastian/cli-parser" />
       <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/doctrine/sql-formatter" />
       <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/doctrine/persistence" />
+      <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/nelmio/alice" />
+      <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/hautelook/alice-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/theofidry/alice-data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/blog_api/vendor/fakerphp/faker" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

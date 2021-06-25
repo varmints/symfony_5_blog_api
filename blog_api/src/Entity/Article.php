@@ -19,12 +19,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     collectionOperations: [
         'get',
-        'post' => ['access_control' => 'is_granted("ROLE_USER")']
+        'post' => ['security' => 'is_granted("ROLE_USER")']
     ],
     itemOperations: [
         'get',
-        'put' => ['access_control' => 'is_granted("ROLE_USER")'],
-        'delete' => ['access_control' => 'is_granted("ROLE_ADMIN")']]
+        'put' => ['security' => 'is_granted("ROLE_USER") and object.getOwner() == user'],
+        'delete' => ['security' => 'is_granted("ROLE_ADMIN")']]
     ,
     attributes: ['pagination_items_per_page' => 10],
     denormalizationContext: ['groups' => ['article:write'], 'swagger_definition_name' => 'Write'],
